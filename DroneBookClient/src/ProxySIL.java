@@ -14,11 +14,13 @@ public class ProxySIL extends Thread {
 	private String hostname;
 	private int remotePort = -1;
 	private Logger logger = new Logger();
+	private boolean verbose;
 
 
-	public ProxySIL(String hostname) {
+	public ProxySIL(String hostname, boolean verbose) {
 		super();
 		this.hostname = hostname;
+		this.verbose = verbose;
 	}
 
 
@@ -30,6 +32,8 @@ public class ProxySIL extends Thread {
 		try {
 			
 			sock = new Socket(hostname, 51001);
+			System.out.println("Success connecting to proxy server...");
+			
 			udpSock = new DatagramSocket(14550);
 			
 			(new OBCToServer()).start();

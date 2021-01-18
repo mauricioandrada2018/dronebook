@@ -30,7 +30,9 @@ public class Server {
 				System.out.println("QGC started");
 				
 				ServerSocket ss = new ServerSocket(54321);
-				Socket qgcSocket = ss.accept();				
+				Socket qgcSocket = ss.accept();	
+				
+				System.out.println("QGC connected: IP = "+qgcSocket.getInetAddress()+" port = "+qgcSocket.getPort());
 				
 				qgcToObc.setFrom(qgcSocket);
 				obcToQgc.setTo(qgcSocket);
@@ -52,6 +54,8 @@ public class Server {
 				
 				ServerSocket ss = new ServerSocket(51001);
 				Socket obcSocket = ss.accept();
+				
+				System.out.println("On-board computer connected: IP = "+obcSocket.getInetAddress()+" port = "+obcSocket.getPort());
 				
 				qgcToObc.setLog(true);
 							
