@@ -6,7 +6,7 @@ The binaries and source code in this repository are a companion to the book ***P
 
 It is a simple client/server implementation allowing QGroundControl to communicate with an UAV over the Internet.
 
-It is composed of a server proxy, responsible for relaying messages from QGroundControl to the UAV and vice-versa, and a client application running in the RPi 4 on-board computer, responsible for relaying messages form the server to the flight controller and telemetry from the flight controller to the server.
+It is composed of a server proxy, responsible for relaying messages from QGroundControl to an UAV's on-board computer and vice-versa, and a client application running in the RPi 4 on-board computer, responsible for relaying MAVLINK messages between the server and the flight controller.
 
 The code provided here is very simple and shall not be used for commercial applications; it has the following limitations:
 
