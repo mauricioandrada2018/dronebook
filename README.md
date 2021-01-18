@@ -13,8 +13,9 @@ The code provided here is very simple and shall not be used for commercial appli
 * All communication is in clear text so privacy is not guaranteed
 * There's no authentication so anyone can interact with the server
 * The server only supports one single UAV and QGroundControle connection
+* The code supports only RPi 4, Pixhawk running PX4 and QGroundControl
 
-Users are free to download and modify the code to remove these limitations.
+Users are free to download and modify the code and remove these limitations.
 
 ## Prerequisites
 
