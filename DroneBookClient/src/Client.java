@@ -6,7 +6,7 @@ public class Client {
 		String iface = "sil";
 		boolean verbose = false;
 				
-		if (args.length % 2 != 0) {
+		if (args.length == 0 || args.length % 2 != 0) {
 			
 			System.out.println("Error: wrong number of options");
 			printUsage();

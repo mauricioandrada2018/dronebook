@@ -13,14 +13,10 @@ public class ProxySIL extends Thread {
 	private DatagramSocket udpSock;
 	private String hostname;
 	private int remotePort = -1;
-	private Logger logger = new Logger();
-	private boolean verbose;
-
-
+	
 	public ProxySIL(String hostname, boolean verbose) {
 		super();
 		this.hostname = hostname;
-		this.verbose = verbose;
 	}
 
 
@@ -39,10 +35,8 @@ public class ProxySIL extends Thread {
 			(new OBCToServer()).start();
 			
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}

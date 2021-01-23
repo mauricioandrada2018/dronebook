@@ -5,7 +5,6 @@ import java.net.Socket;
 import java.util.Arrays;
 
 import com.fazecast.jSerialComm.SerialPort;
-import com.fazecast.jSerialComm.SerialPortInvalidPortException;
 
 public class ProxyOBC extends Thread {
 

@@ -1,8 +1,6 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.util.ArrayDeque;
 
 public class Server {
 	
@@ -32,6 +30,8 @@ public class Server {
 				ServerSocket ss = new ServerSocket(54321);
 				Socket qgcSocket = ss.accept();	
 				
+				ss.close();
+				
 				System.out.println("QGC connected: IP = "+qgcSocket.getInetAddress()+" port = "+qgcSocket.getPort());
 				
 				qgcToObc.setFrom(qgcSocket);
@@ -54,6 +54,8 @@ public class Server {
 				
 				ServerSocket ss = new ServerSocket(51001);
 				Socket obcSocket = ss.accept();
+				
+				ss.close();
 				
 				System.out.println("On-board computer connected: IP = "+obcSocket.getInetAddress()+" port = "+obcSocket.getPort());
 				
