@@ -17,8 +17,8 @@ public class Server {
 	
 	public Server() {
 		
-		(new QGCThread()).start();
 		(new OBCThread()).start();
+		(new QGCThread()).start();
 
 	}
 	
