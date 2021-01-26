@@ -17,7 +17,7 @@ public class Proxy extends Thread {
 
 	public void setTo(Socket to) {
 		this.to = to;
-
+		
 		if (to != null && from != null)
 			start();
 	}
@@ -32,6 +32,9 @@ public class Proxy extends Thread {
 	public void run() {
 
 		try {
+			
+			this.to.setTcpNoDelay(true);
+			this.from.setTcpNoDelay(true);
 
 			BufferedInputStream bis = new BufferedInputStream(from.getInputStream());
 			BufferedOutputStream bos = new BufferedOutputStream(to.getOutputStream());

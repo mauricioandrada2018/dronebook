@@ -4,8 +4,8 @@ import java.net.Socket;
 
 public class Server {
 	
-	private Proxy obcToQgc = new Proxy();
-	private Proxy qgcToObc = new Proxy();
+	private Proxy obcToQgc;
+	private Proxy qgcToObc;
 	private String logSelection = "";
 
 	public static void main(String[] args) {
@@ -16,6 +16,9 @@ public class Server {
 	}
 	
 	public Server() {
+		
+		obcToQgc = new Proxy();
+		qgcToObc = new Proxy();
 		
 		(new OBCThread()).start();
 		(new QGCThread()).start();
