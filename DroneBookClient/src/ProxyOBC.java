@@ -173,7 +173,7 @@ public class ProxyOBC extends Thread {
 	
 		SerialPort serialPort = null;
 				
-			serialPort = SerialPort.getCommPort("/dev/ttyAMA0");
+			serialPort = SerialPort.getCommPort("/dev/ttyS0");
 			
 			if (serialPort != null) {
 				
