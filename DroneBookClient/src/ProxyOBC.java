@@ -96,10 +96,14 @@ public class ProxyOBC extends Thread {
 					
 					int size = serialPort.readBytes(buffer, buffer.length);
 					
-					if (verbose) System.out.println("data from serial: "+Arrays.toString(Arrays.copyOfRange(buffer, 0, size-1)));
+					if (size >= 0) {
 						
-					bos.write(buffer,0,size);
-					bos.flush();
+						if (verbose) System.out.println("data from serial: "+Arrays.toString(Arrays.copyOfRange(buffer, 0, size-1)));
+						
+						bos.write(buffer,0,size);
+						bos.flush();
+						
+					} 
 					
 					synchronized(this) {
 						
@@ -132,14 +136,17 @@ public class ProxyOBC extends Thread {
 					
 					int size = bis.read(buffer);
 					
-					if (verbose) System.out.println("data from server: "+Arrays.toString(Arrays.copyOfRange(buffer, 0, size-1)));
-					
-					int auxSize = 0;
-					
-					while (auxSize < size) {
+					if (size >= 0) {
 						
-						auxSize += serialPort.writeBytes(buffer, size-auxSize, auxSize);	
+						if (verbose) System.out.println("data from server: "+Arrays.toString(Arrays.copyOfRange(buffer, 0, size-1)));
 						
+						int auxSize = 0;
+						
+						while (auxSize < size) {
+							
+							auxSize += serialPort.writeBytes(buffer, size-auxSize, auxSize);	
+							
+						}
 					}
 					
 					synchronized(this) {
