@@ -6,10 +6,13 @@ public class Server {
 	
 	private Proxy obcToQgc = new Proxy();
 	private Proxy qgcToObc = new Proxy();
+	private String logSelection = "";
 
 	public static void main(String[] args) {
 
-		new Server();
+		Server server = new Server();
+		if (args.length > 0)
+			server.logSelection = args[0];
 	}
 	
 	public Server() {
@@ -32,7 +35,8 @@ public class Server {
 								
 				System.out.println("QGC connected: IP = "+qgcSocket.getInetAddress()+" port = "+qgcSocket.getPort());
 				
-				//qgcToObc.setLog("QGC to OBC: ",true);
+				if (logSelection.equals("qgc"))
+					qgcToObc.setLog("QGC to OBC: ",true);
 				
 				qgcToObc.setFrom(qgcSocket);
 				obcToQgc.setTo(qgcSocket);
@@ -59,8 +63,9 @@ public class Server {
 				Socket obcSocket = ss.accept();				
 				
 				System.out.println("On-board computer connected: IP = "+obcSocket.getInetAddress()+" port = "+obcSocket.getPort());
-				
-				obcToQgc.setLog("QGC to OBC: ",true);
+
+				if (logSelection.equals("obc"))
+					obcToQgc.setLog("OBC to QGC: ",true);
 		
 				qgcToObc.setTo(obcSocket);
 				obcToQgc.setFrom(obcSocket);
