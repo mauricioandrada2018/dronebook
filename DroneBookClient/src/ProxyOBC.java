@@ -139,7 +139,7 @@ public class ProxyOBC extends Thread {
 					
 					if (size > 0) {
 						
-						if (verbose == 2) System.out.println("data from server: "+Arrays.toString(Arrays.copyOfRange(buffer, 0, size-1)));
+						if (verbose == 3) System.out.println("data from server: "+Arrays.toString(Arrays.copyOfRange(buffer, 0, size-1)));
 						
 						serialPort.writeBytes(buffer, size);
 					
