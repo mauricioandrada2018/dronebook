@@ -13,7 +13,7 @@ public class Client {
 			return;
 		}
 		
-		int length = (args.length < 4)?args.length:4;
+		int length = (args.length < 6)?args.length:6;
 		
 		for (int i = 0; i < length; i +=2) {
 			
@@ -33,7 +33,7 @@ public class Client {
 				
 			case "-v":
 				
-				verbose = true;
+				verbose = Integer.valueOf(args[i + 1]) == 1;
 				
 				break;
 				
