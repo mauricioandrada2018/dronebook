@@ -32,6 +32,8 @@ public class Server {
 								
 				System.out.println("QGC connected: IP = "+qgcSocket.getInetAddress()+" port = "+qgcSocket.getPort());
 				
+				//qgcToObc.setLog("QGC to OBC: ",true);
+				
 				qgcToObc.setFrom(qgcSocket);
 				obcToQgc.setTo(qgcSocket);
 				
@@ -58,8 +60,8 @@ public class Server {
 				
 				System.out.println("On-board computer connected: IP = "+obcSocket.getInetAddress()+" port = "+obcSocket.getPort());
 				
-				qgcToObc.setLog("QGC to OBC: ",true);
-							
+				obcToQgc.setLog("QGC to OBC: ",true);
+		
 				qgcToObc.setTo(obcSocket);
 				obcToQgc.setFrom(obcSocket);
 				

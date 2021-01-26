@@ -24,7 +24,7 @@ public class Proxy extends Thread {
 
 	public void setFrom(Socket from) {
 		this.from = from;
-
+		
 		if (to != null && from != null)
 			start();
 	}
@@ -41,21 +41,24 @@ public class Proxy extends Thread {
 			while (true) {
 
 				int size = bis.read(buffer);
+				
+				if (log)
+					System.out.println(comment + "received size = "+size);
 
 				if (size > 0) {
 
-					bos.write(buffer, 0, size);
-					bos.flush();
-
 					if (log)
 						System.out.println(comment + Arrays.toString(Arrays.copyOfRange(buffer, 0, size - 1)));
+					
+					bos.write(buffer, 0, size);
+					bos.flush();
 
 				}
 
 				synchronized (this) {
 
 					try {
-						wait(100);
+						wait(1);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

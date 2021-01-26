@@ -11,9 +11,9 @@ public class ProxyOBC extends Thread {
 	private SerialPort serialPort;
 	private Socket sock;
 	private String hostname;
-	private boolean verbose;
+	private int verbose;
 	
-	public ProxyOBC(String hostname, boolean verbose) {
+	public ProxyOBC(String hostname, int verbose) {
 		super();
 		this.hostname = hostname;
 		this.verbose = verbose;
@@ -26,7 +26,7 @@ public class ProxyOBC extends Thread {
 		
 		try {
 			
-			if (verbose) System.out.println("Connecting to server..."+hostname);
+			if (verbose < 2) System.out.println("Connecting to server..."+hostname);
 			
 			while(true) {
 				
@@ -36,7 +36,7 @@ public class ProxyOBC extends Thread {
 					break;
 					
 				} catch (Exception e) {
-					if (verbose) System.out.println("Failed to connect to server "+hostname+"... Retrying in 1 second...");
+					if (verbose <  2) System.out.println("Failed to connect to server "+hostname+"... Retrying in 1 second...");
 				}
 
 				synchronized(this) {
@@ -49,17 +49,17 @@ public class ProxyOBC extends Thread {
 				}
 			}
 			
-			if (verbose) {
+			if (verbose < 2) {
 				System.out.println("Success connecting to proxy server...");	
 			}
 			
-			if (verbose) System.out.println("Connecting to serial port...");
+			if (verbose < 2) System.out.println("Connecting to serial port...");
 
 			serialPort = initSerialPort();
 			
 			if (serialPort != null && serialPort.openPort()) {
 				
-				if (verbose) {
+				if (verbose < 2) {
 					System.out.println("Success connecting to serial port...");
 				}
 				
@@ -68,7 +68,7 @@ public class ProxyOBC extends Thread {
 				
 			} else {
 				
-				if (verbose) {
+				if (verbose < 2) {
 					System.out.println("Failed connecting to serial port. Make sure Pixhawk is powered, serial port is correctly configured in the RPi 4 and cables are correctly connected");
 				}
 			}
@@ -98,7 +98,7 @@ public class ProxyOBC extends Thread {
 					
 					if (size > 0) {
 						
-						if (verbose) System.out.println("data from serial: "+Arrays.toString(Arrays.copyOfRange(buffer, 0, size-1)));
+						if (verbose < 3) System.out.println("data from serial: "+Arrays.toString(Arrays.copyOfRange(buffer, 0, size-1)));
 						
 						bos.write(buffer,0,size);
 						bos.flush();
@@ -139,7 +139,7 @@ public class ProxyOBC extends Thread {
 					
 					if (size > 0) {
 						
-						if (verbose) System.out.println("data from server: "+Arrays.toString(Arrays.copyOfRange(buffer, 0, size-1)));
+						if (verbose < 3) System.out.println("data from server: "+Arrays.toString(Arrays.copyOfRange(buffer, 0, size-1)));
 						
 						serialPort.writeBytes(buffer, size);
 					

@@ -14,7 +14,7 @@ public class ProxySIL extends Thread {
 	private String hostname;
 	private int remotePort = -1;
 	
-	public ProxySIL(String hostname, boolean verbose) {
+	public ProxySIL(String hostname, int verbose) {
 		super();
 		this.hostname = hostname;
 	}
@@ -74,7 +74,6 @@ public class ProxySIL extends Thread {
 						try {
 							wait(1);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -116,14 +115,12 @@ public class ProxySIL extends Thread {
 						try {
 							wait(1);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 				}
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}			
 		}		

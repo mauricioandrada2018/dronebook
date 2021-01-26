@@ -4,7 +4,7 @@ public class Client {
 		
 		String hostname = "localhost";
 		String iface = "sil";
-		boolean verbose = false;
+		int verbose = 0;
 				
 		if (args.length == 0 || args.length % 2 != 0) {
 			
@@ -33,7 +33,7 @@ public class Client {
 				
 			case "-v":
 				
-				verbose = Integer.valueOf(args[i + 1]) == 1;
+				verbose = Integer.valueOf(args[i + 1]);
 				
 				break;
 				
@@ -47,7 +47,7 @@ public class Client {
 		new Client(hostname,iface, verbose);
 	}
 
-	public Client(String hostName, String iface, boolean verbose) {
+	public Client(String hostName, String iface, int verbose) {
 		
 		if (iface.equals("sil"))
 			(new ProxySIL(hostName, verbose)).start();
@@ -58,10 +58,10 @@ public class Client {
 	
 	private static void printUsage() {
 		
-		System.out.println("px4client [-h host] [-v] -i obc|sil");
+		System.out.println("px4client [-h host] [-v 1|2] -i obc|sil");
 		System.out.println("-h:	server host (default localhost)");
 		System.out.println("-i:	interface (on-board computer or simulator (default simulator)");
-		System.out.println("-v:	enable verbose mode");
+		System.out.println("-v:	enable verbose mode; higher numbers enable higher logs");
 
 		
 	}
