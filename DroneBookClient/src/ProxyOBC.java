@@ -90,11 +90,12 @@ public class ProxyOBC extends Thread {
 			try {
 				
 				BufferedOutputStream bos = new BufferedOutputStream(sock.getOutputStream());
+				BufferedInputStream bis = new BufferedInputStream(serialPort.getInputStream());
 				byte[] buffer = new byte[200];
 				
 				while (true) {
 					
-					int size = serialPort.readBytes(buffer, buffer.length);
+					int size = bis.read(buffer);
 					
 					if (size > 0) {
 						
@@ -108,7 +109,7 @@ public class ProxyOBC extends Thread {
 					synchronized(this) {
 						
 						try {
-							wait(1);
+							wait(10);
 						} catch (InterruptedException e) {
 							
 							e.printStackTrace();
@@ -130,6 +131,8 @@ public class ProxyOBC extends Thread {
 			try {
 				
 				BufferedInputStream bis = new BufferedInputStream(sock.getInputStream());
+				BufferedOutputStream sos = new BufferedOutputStream(serialPort.getOutputStream());
+				
 				byte[] buffer = new byte[200];
 				
 				while (true) {
@@ -140,25 +143,19 @@ public class ProxyOBC extends Thread {
 						
 						if (verbose) System.out.println("data from server: "+Arrays.toString(Arrays.copyOfRange(buffer, 0, size-1)));
 						
-						int auxSize = 0;
-						
-						while (auxSize < size) {
-							
-							auxSize += serialPort.writeBytes(buffer, size-auxSize, auxSize);	
-							
-						}
+						sos.write(buffer, 0, size);
+						sos.flush();
 					}
 					
 					synchronized(this) {
 						
 						try {
-							wait(1);
+							wait(10);
 						} catch (InterruptedException e) {
 							
 							e.printStackTrace();
 						}
-					}
-					
+					}					
 				}
 								
 			} catch (IOException e) {
