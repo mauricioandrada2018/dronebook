@@ -58,7 +58,7 @@ public class Proxy extends Thread {
 				synchronized (this) {
 
 					try {
-						wait(1);
+						wait(100);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
