@@ -26,7 +26,7 @@ public class ProxyOBC extends Thread {
 		
 		try {
 			
-			if (verbose) System.out.println("Connecting to server...");
+			if (verbose) System.out.println("Connecting to server..."+hostname);
 			
 			while(true) {
 				
@@ -36,7 +36,7 @@ public class ProxyOBC extends Thread {
 					break;
 					
 				} catch (Exception e) {
-					if (verbose) System.out.println("Failed to connect to server. Retrying in 1 second...");
+					if (verbose) System.out.println("Failed to connect to server "+hostname+"... Retrying in 1 second...");
 				}
 
 				synchronized(this) {
