@@ -42,7 +42,7 @@ public class ProxyOBC extends Thread {
 				synchronized(this) {
 					
 					try {
-						wait(1000);
+						wait(10);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -108,7 +108,7 @@ public class ProxyOBC extends Thread {
 					synchronized(this) {
 						
 						try {
-							wait(100);
+							wait(10);
 						} catch (InterruptedException e) {
 							
 							e.printStackTrace();
