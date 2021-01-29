@@ -29,7 +29,7 @@ Users are free to download and modify the code and remove these limitations.
 
 
 ## Usage
-Use *git clone* or link to the ZIP file and download the content of the repository.
+Use *git clone* or the link to the ZIP file and download the content of the repository.
 The content includes both source code and JAR files that can be used as is.
 
 `git clone https://github.com/mauricioandrada2018/dronebook.git`
