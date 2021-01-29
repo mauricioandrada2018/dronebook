@@ -24,8 +24,8 @@ Users are free to download and modify the code and remove these limitations.
 ^ Raspberry Pi 4 with Raspberry OS installed
 * Pixhawk with PX4 software installed
 * Serial cable connecting the Raspberry Pi 4 to the Pixhawk, per instructions in the book
-* Web service accuont (AWS, OpenShift, etc.)
-* Java Runtime Environment installed in both RPi 4 and web service account
+* Web service account (AWS, OpenShift, etc.)
+* Java Runtime Environment installed in both RPi 4 and web service account (usually installed by default)
 
 
 ## Usage
@@ -37,20 +37,24 @@ Users are free to download and modify the code and remove these limitations.
    1. The server will bind to hardcoded ports 54321 and 51001 so make sure these ports are open for TCP external access
 1. Run the server proxy:
 
-`java -jar serverproxy.jar [-v]`
+`java -jar serverproxy.jar [obc|qgc]
 
-The **-v** option will enable verbose mode and the server will display current status, success/failure and data received from both QGroundControl and the on-board computer; it is helpful for debugging.
+The **obc** option will display logs with data received from the on-board computer; the **qgc** option will show data from QGroundControle.
 
 ## Client application
 
 1. Upload the client app JAR file `<git clone folder>/build/px4client.jar` to the RPi 4
 1. Run the client app:
 
-`java -jar clientapp.jar [-v] -h <hostname> -i obc`
+`java -jar clientapp.jar [-v 1|2|3] -h <hostname> -i obc`
 
 **hostname** is the URL or IP address for the server proxy.
 
 **-v** enables verbose mode and the client will display messages on screen, useful for debugging.
+* 1: minimalistic logs
+* 2: logs from option 1 + data read from the serial port
+* 3: logs from 1 + data received from the server
+
 The book provides instructions n how to setup the RPi 4 to start the client application automatically on power up.
 
 
