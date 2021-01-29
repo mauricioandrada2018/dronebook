@@ -44,7 +44,7 @@ public class ProxyOBC extends Thread {
 
 		while (true) {
 			
-			if (verbose < 2)
+			if (verbose > 0)
 				System.out.println("Connecting to server..." + hostname);
 
 			while (true) {
@@ -55,7 +55,7 @@ public class ProxyOBC extends Thread {
 					break;
 
 				} catch (Exception e) {
-					if (verbose < 2)
+					if (verbose > 0)
 						System.out.println("Failed to connect to server " + hostname
 								+ "... Retrying in 1 second...Check if server is running...");
 				}
@@ -70,12 +70,11 @@ public class ProxyOBC extends Thread {
 				}
 			}
 
-			if (verbose < 2) {
+			if (verbose > 0) {
 				System.out.println("Success connecting to proxy server...");
-			}
-
-			if (verbose < 2)
 				System.out.println("Connecting to serial port...");
+
+			}
 
 			try {
 
@@ -88,7 +87,7 @@ public class ProxyOBC extends Thread {
 
 			if (serialPort != null && serialPort.openPort()) {
 
-				if (verbose < 2) {
+				if (verbose > 0) {
 					System.out.println("Success connecting to serial port...");
 				}
 
