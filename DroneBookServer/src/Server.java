@@ -1,3 +1,4 @@
+
 /*******************************************************************************
  * Copyright 2021 Mauricio Andrada
  * 
@@ -21,50 +22,99 @@ public class Server {
 
 	private Proxy obcToQgc;
 	private Proxy qgcToObc;
+	private Socket qgcSocket;
+	private Socket obcSocket;
+
 	private String logSelection = "";
+	private Object lock = new Object();
 
 	public static void main(String[] args) {
 
 		Server server = new Server();
+		
 		if (args.length > 0)
 			server.logSelection = args[0];
+		
+		server.execute();
 	}
 
-	public Server() {
+	
+	private void execute() {
+		
+		while(true) {
+			
+			obcToQgc = new Proxy();
+			qgcToObc = new Proxy();
 
-		obcToQgc = new Proxy();
-		qgcToObc = new Proxy();
+			(new OBCThread()).start();
+			(new QGCThread()).start();
+			
+			synchronized (lock) {
+				
+				try {
+					
+					lock.wait();
+					
+				} catch (InterruptedException e) {
+					
+				}
+			}
+			
+			obcToQgc.resetLock();
+			qgcToObc.resetLock();
+			
+			if (qgcSocket != null ) {
+				
+				try {
+					qgcSocket.close();
+				} catch (IOException e) {
+					
+				}
+			}
+			
+			if (obcSocket != null ) {
+				
+				try {
+					obcSocket.close();
+				} catch (IOException e) {
 
-		(new OBCThread()).start();
-		(new QGCThread()).start();
-
+				}
+			}
+		}
 	}
 
 	private class QGCThread extends Thread {
 
+
 		public void run() {
 
-			try {
+			while (true) {
+				
+				try {
 
-				System.out.println("QGC started");
+					System.out.println("QGC started");
 
-				ServerSocket ss = new ServerSocket(54321);
-				Socket qgcSocket = ss.accept();
+					ServerSocket ss = new ServerSocket(54321);
+					qgcSocket = ss.accept();
 
-				System.out.println(
-						"QGC connected: IP = " + qgcSocket.getInetAddress() + " port = " + qgcSocket.getPort());
+					System.out.println(
+							"QGC connected: IP = " + qgcSocket.getInetAddress() + " port = " + qgcSocket.getPort());
 
-				if (logSelection.equals("qgc"))
-					qgcToObc.setLog("QGC to OBC: ", true);
+					if (logSelection.equals("qgc"))
+						qgcToObc.setLog("QGC to OBC: ", true);
 
-				qgcToObc.setFrom(qgcSocket);
-				obcToQgc.setTo(qgcSocket);
+					qgcToObc.setLock(lock);
+					obcToQgc.setLock(lock);
+					
+					qgcToObc.setFrom(qgcSocket);
+					obcToQgc.setTo(qgcSocket);
 
-				ss.close();
+					ss.close();
+										
 
-			} catch (IOException e) {
+				} catch (IOException e) {
 
-				e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -72,31 +122,37 @@ public class Server {
 	private class OBCThread extends Thread {
 
 		public void run() {
+			
+			
+			while (true) {
+				
+				try {
 
-			try {
+					System.out.println("OBC started");
 
-				System.out.println("OBC started");
+					ServerSocket ss = new ServerSocket(51001);
+					obcSocket = ss.accept();
 
-				ServerSocket ss = new ServerSocket(51001);
-				Socket obcSocket = ss.accept();
+					System.out.println("On-board computer connected: IP = " + obcSocket.getInetAddress() + " port = "
+							+ obcSocket.getPort());
 
-				System.out.println("On-board computer connected: IP = " + obcSocket.getInetAddress() + " port = "
-						+ obcSocket.getPort());
+					if (logSelection.equals("obc"))
+						obcToQgc.setLog("OBC to QGC: ", true);
+					
+					qgcToObc.setLock(lock);
+					obcToQgc.setLock(lock);
 
-				if (logSelection.equals("obc"))
-					obcToQgc.setLog("OBC to QGC: ", true);
+					qgcToObc.setTo(obcSocket);
+					obcToQgc.setFrom(obcSocket);
 
-				qgcToObc.setTo(obcSocket);
-				obcToQgc.setFrom(obcSocket);
+					ss.close();
 
-				ss.close();
+				} catch (IOException e) {
 
-			} catch (IOException e) {
-
-				e.printStackTrace();
+					e.printStackTrace();
+				}
+				
 			}
-
 		}
 	}
-
 }
