@@ -42,10 +42,10 @@ public class ProxyOBC extends Thread {
 		if (hostname == null)
 			hostname = "localhost";
 
-		if (verbose < 2)
-			System.out.println("Connecting to server..." + hostname);
-
 		while (true) {
+			
+			if (verbose < 2)
+				System.out.println("Connecting to server..." + hostname);
 
 			while (true) {
 
@@ -165,7 +165,11 @@ public class ProxyOBC extends Thread {
 					}
 				}
 				
-				lock.notifyAll();
+				synchronized (lock) {
+					
+					lock.notifyAll();
+
+				}
 			}
 		}
 	}
@@ -206,8 +210,12 @@ public class ProxyOBC extends Thread {
 				}
 
 			} catch (IOException e) {
+				
+				synchronized (lock) {
+					
+					lock.notifyAll();
 
-				lock.notifyAll();
+				}
 			}
 		}
 	}
