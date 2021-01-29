@@ -164,6 +164,8 @@ public class ProxyOBC extends Thread {
 
 					}
 				}
+				
+				lock.notifyAll();
 			}
 		}
 	}
@@ -205,6 +207,7 @@ public class ProxyOBC extends Thread {
 
 			} catch (IOException e) {
 
+				lock.notifyAll();
 			}
 		}
 	}
