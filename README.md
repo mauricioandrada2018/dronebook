@@ -37,7 +37,7 @@ Users are free to download and modify the code and remove these limitations.
    1. The server will bind to hardcoded ports 54321 and 51001 so make sure these ports are open for TCP external access
 1. Run the server proxy:
 
-`java -jar serverproxy.jar [obc|qgc]
+`java -jar serverproxy.jar [obc|qgc]`
 
 The **obc** option will display logs with data received from the on-board computer; the **qgc** option will show data from QGroundControle.
 
